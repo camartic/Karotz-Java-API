@@ -100,16 +100,20 @@ public final class KarotzUtil {
         Map.Entry<String, String> next = iter.next();
 
         try {
-            buffer.append(next.getKey()).append("=").append(URLEncoder.encode(next.getValue(), UTF_8));
+            buffer.append(next.getKey()).append("=").append(encodeString(next));
             while (iter.hasNext()) {
                 next = iter.next();
-                buffer.append("&").append(next.getKey()).append("=").append(URLEncoder.encode(next.getValue(), UTF_8));
+                buffer.append("&").append(next.getKey()).append("=").append(encodeString(next));
             }
         } catch (UnsupportedEncodingException e) {
             throw new UnableToBuildKarotzWebAPIURLException(e);
         }
 
         return buffer.toString();
+    }
+
+    private static String encodeString(Map.Entry<String, String> next) throws UnsupportedEncodingException {
+        return URLEncoder.encode(next.getValue(), UTF_8);
     }
 
 }

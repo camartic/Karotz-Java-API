@@ -24,30 +24,31 @@
 package org.peripheralware.karotz.action;
 
 import java.util.Map;
-import static org.junit.Assert.*;
+
+import static org.fest.assertions.Assertions.assertThat;
+
 import org.junit.Test;
+import org.peripheralware.karotz.action.tts.SpeakAction;
 
 
 /**
  * Test for SpeakAction.
  *
  * @author Seiji Sogabe <s.sogabe@gmail.com>
+ * @author Martin Ritchie
  */
 public class SpeakActionTest {
 
-    /**
-     * Test of getParameters method, of class SpeakAction.
-     */
     @Test
-    public void testGetParameters() {
+    public void testGetParameters_valuesAreSetInMap() {
         SpeakAction action = new SpeakAction("text", "EN");
 
         Map<String, String> params = action.getParameters();
-        assertNotNull(params);
 
-        assertEquals(3, params.size());
-        assertEquals("speak", params.get("action"));
-        assertEquals("text", params.get("text"));
-        assertEquals("EN", params.get("lang"));
+        assertThat(params).isNotNull();
+        assertThat(params.size()).isEqualTo(3);        
+        assertThat(params.get("action")).isEqualTo("speak");
+        assertThat(params.get("text")).isEqualTo("text");
+        assertThat(params.get("lang")).isEqualTo("EN");
     }
 }

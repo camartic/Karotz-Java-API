@@ -23,6 +23,8 @@
  */
 package org.peripheralware.karotz.action.led;
 
+import org.peripheralware.karotz.action.KarotzAction;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +48,7 @@ public class LedFadeAction implements KarotzAction {
         this(color.getCode(), period);
     }
 
-    public String getBaseUrl() {
+    public String getURL() {
         return "http://api.karotz.com/api/karotz/led";
     }
 

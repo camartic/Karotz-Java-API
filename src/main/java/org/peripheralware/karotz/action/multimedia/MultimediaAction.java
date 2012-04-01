@@ -23,6 +23,8 @@
  */
 package org.peripheralware.karotz.action.multimedia;
 
+import org.peripheralware.karotz.action.KarotzAction;
+
 /**
  * MultimediaAction.
  *
@@ -30,7 +32,7 @@ package org.peripheralware.karotz.action.multimedia;
  */
 public abstract class MultimediaAction implements KarotzAction {
 
-    public String getBaseUrl() {
+    public String getURL() {
         return "http://api.karotz.com/api/karotz/multimedia";
     }
 

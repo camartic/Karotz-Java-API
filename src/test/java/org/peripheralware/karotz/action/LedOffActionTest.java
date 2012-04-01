@@ -24,6 +24,8 @@
 package org.peripheralware.karotz.action;
 
 import java.util.Map;
+
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.peripheralware.karotz.action.led.LedOffAction;
@@ -33,20 +35,18 @@ import org.peripheralware.karotz.action.led.LedOffAction;
  * Test for LedOffAction.
  *
  * @author Seiji Sogabe <s.sogabe@gmail.com>
+ * @author Martin Ritchie
  */
 public class LedOffActionTest {
 
-    /**
-     * Test of getParameters method, of class LedOffAction.
-     */
     @Test
     public void testGetParameters() {
         LedOffAction action = new LedOffAction();
 
         Map<String, String> params = action.getParameters();
-        assertNotNull(params);
+        assertThat(params).isNotNull();
 
-        assertEquals(1, params.size());
-        assertEquals("light", params.get("action"));
+        assertThat(params.size()).isEqualTo(1);
+        assertThat(params.get("action")).isEqualTo("light");
     }
 }

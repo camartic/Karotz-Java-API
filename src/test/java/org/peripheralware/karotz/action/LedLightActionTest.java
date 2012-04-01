@@ -24,6 +24,8 @@
 package org.peripheralware.karotz.action;
 
 import java.util.Map;
+
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.peripheralware.karotz.action.led.LedColor;
@@ -33,36 +35,44 @@ import org.peripheralware.karotz.action.led.LedLightAction;
  * Test for LedLightAction
  *
  * @author Seiji Sogabe <s.sogabe@gmail.com>
+ * @author Martin Ritchie
  */
 public class LedLightActionTest {
 
-    /**
-     * Test of getParameters method, of class LedLightAction.
-     */
     @Test
-    public void testGetParameters() {
+    public void testGetParameters_setNullString_actionIsSetNoColor() {
+        LedLightAction action = new LedLightAction((String)null);
+
+        Map<String, String> params = action.getParameters();
+        assertThat(params).isNotNull();
+
+        assertThat(params.size()).isEqualTo(1);
+        assertThat(params.get("action")).isEqualTo("light");
+        assertThat(params.get("color")).isNull();
+    }
+
+    @Test
+    public void testGetParameters_setViaString_setsColor() {
         LedLightAction action = new LedLightAction("FF0000");
 
         Map<String, String> params = action.getParameters();
-        assertNotNull(params);
+        assertThat(params).isNotNull();
 
-        assertEquals(2, params.size());
-        assertEquals("light", params.get("action"));
-        assertEquals("FF0000", params.get("color"));
+        assertThat(params.size()).isEqualTo(2);
+        assertThat(params.get("action")).isEqualTo("light");
+        assertThat(params.get("color")).isEqualTo("FF0000");
+
     }
 
-    /**
-     * Test of getParameters method, of class LedLightAction.
-     */
     @Test
-    public void testGetParameters_LedColor() {
+    public void testGetParameters_setViaLedColor_setsColorAsString() {
         LedLightAction action = new LedLightAction(LedColor.RED);
 
         Map<String, String> params = action.getParameters();
-        assertNotNull(params);
+        assertThat(params).isNotNull();
 
-        assertEquals(2, params.size());
-        assertEquals("light", params.get("action"));
-        assertEquals("FF0000", params.get("color"));
+        assertThat(params.size()).isEqualTo(2);
+        assertThat(params.get("action")).isEqualTo("light");
+        assertThat(params.get("color")).isEqualTo("FF0000");
     }
 }

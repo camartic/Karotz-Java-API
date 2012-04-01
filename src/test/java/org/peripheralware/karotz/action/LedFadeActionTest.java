@@ -24,47 +24,51 @@
 package org.peripheralware.karotz.action;
 
 import java.util.Map;
+
+import static org.fest.assertions.Assertions.assertThat;
 import static org.junit.Assert.*;
 import org.junit.Test;
 import org.peripheralware.karotz.action.led.LedColor;
 import org.peripheralware.karotz.action.led.LedFadeAction;
+import org.peripheralware.karotz.action.led.LedLightAction;
 
 /**
  * Test for LedFadeAction
  *
- * @author Seiji Sogabe <s.sogabe@gmail.com>
+ * @author Martin Ritchie
  */
 public class LedFadeActionTest {
 
-    /**
-     * Test of getParameters method, of class LedFadeAction.
-     */
     @Test
-    public void testGetParameters() {
+    public void testGetParameters_valuesSet_areReturned() {
         LedFadeAction action = new LedFadeAction("FF0000", 1000);
 
         Map<String, String> params = action.getParameters();
-        assertNotNull(params);
+        assertThat(params).isNotNull();
 
-        assertEquals(3, params.size());
-        assertEquals("fade", params.get("action"));
-        assertEquals("FF0000", params.get("color"));
-        assertEquals("1000", params.get("period"));
+        assertThat(params.size()).isEqualTo(3);
+        assertThat(params.get("action")).isEqualTo("fade");
+        assertThat(params.get("color")).isEqualTo("FF0000");
+        assertThat(params.get("period")).isEqualTo("1000");
     }
 
-    /**
-     * Test of getParameters method, of class LedFadeAction.
-     */
     @Test
-    public void testGetParameters_LedColor() {
+    public void testGetParameters_setViaLedColor_setCorrectString() {
         LedFadeAction action = new LedFadeAction(LedColor.RED, 1000);
 
         Map<String, String> params = action.getParameters();
-        assertNotNull(params);
-
-        assertEquals(3, params.size());
-        assertEquals("fade", params.get("action"));
+        assertThat(params).isNotNull();
         assertEquals("FF0000", params.get("color"));
-        assertEquals("1000", params.get("period"));
     }
+
+    @Test
+    public void testGetParameters_setNullString_actionIsSetNoColor() {
+        LedFadeAction action = new LedFadeAction((String)null, 100);
+
+        Map<String, String> params = action.getParameters();
+        assertThat(params).isNotNull();
+
+        assertThat(params.get("color")).isNull();
+    }
+
 }

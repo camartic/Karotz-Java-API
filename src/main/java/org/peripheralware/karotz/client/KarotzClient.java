@@ -90,7 +90,7 @@ public class KarotzClient {
         if (isInteractive()) {
             return;
         }
-        Random random = new Random();
+        Random random = new Random(System.currentTimeMillis());
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("apikey", apiKey);
         parameters.put("installid", installId);
@@ -100,11 +100,12 @@ public class KarotzClient {
         String url = getSignedUrl(parameters, secretKey);
 
         String result = doRequest(url);
-        LOGGER.info("Got: {0}", result);
+        LOGGER.info("Got: {}", result);
 
         interactiveId = parseResponse(result, "interactiveId");
         if (interactiveId == null) {
             String code = parseResponse(result, "code");
+            System.err.println(result);
             throw new KarotzException("[code] " + code);
         }
     }
@@ -140,13 +141,14 @@ public class KarotzClient {
             throw new IllegalArgumentException("url is null");
         }
 
+        LOGGER.info("Request: {}", url);
         String result;
         try {
             URLConnection connection = new URL(url).openConnection();
             connection.connect();
             InputStream inputStream = connection.getInputStream();
             result = IOUtils.toString(inputStream);
-            LOGGER.info("result is {0}", result);
+            LOGGER.info("result is {}", result);
         } catch (IOException e) {
             throw new UnableToPerformRequestException(e);
         }
@@ -191,7 +193,7 @@ public class KarotzClient {
     private String getSignedUrl(Map<String, String> params, String secretKey) throws KarotzException {
         String q = KarotzUtil.buildQuery(params);
         String signedQuery = KarotzUtil.doHmacSha1(secretKey, q);
-        LOGGER.info("singedQuery: [{0}]", signedQuery);
+        LOGGER.info("signedQuery: [{}]", signedQuery);
         try {
             return String.format("%s?%s&signature=%s", KAROTZ_URL_START, q, URLEncoder.encode(signedQuery,"UTF-8"));
         } catch (UnsupportedEncodingException e) {
