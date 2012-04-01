@@ -37,6 +37,7 @@ public class KarotzCLI {
             public void run() {
                 try {
                     client.stopInteractiveMode();
+                    System.out.println();
                 } catch (KarotzException e) {
                     log("Error stopping client:" + e.getMessage());
                 }
@@ -67,7 +68,7 @@ public class KarotzCLI {
                 input = consoleReader.readLine();
 
                 processInput(consoleReader, input);
-            } while (!input.equals("exit"));
+            } while (input != null && !input.equals("exit"));
 
 
         } catch (IOException e) {
@@ -77,7 +78,8 @@ public class KarotzCLI {
     }
 
     private void processInput(ConsoleReader consoleReader, String input) throws IOException {
-        input = input.trim();
+
+        input = input == null ? "" : input.trim();
         String[] split = input.split(" ");
 
         String command = split[0];
