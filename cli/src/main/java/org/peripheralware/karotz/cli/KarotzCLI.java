@@ -26,7 +26,8 @@ public class KarotzCLI {
     private static final String INSTALL_ID_SHORT_CODE = "i";
     private final KarotzClient client;
     private final KarotzActionPublisher karotzActionPublisher;
-
+    private static final String API_DEFAULT = "a8e0ad3e-7a24-4028-92ac-d376c7168bdf";
+    private static final String SECRET_KEY_DEFAULT = "c53b533c-a8a9-4d0c-a181-9e6e8709d3f1";
 
     public KarotzCLI(final KarotzClient client) {
         this.client = client;
@@ -152,11 +153,11 @@ public class KarotzCLI {
                 printHelpAndExit();
             }
 
-            String apiKey = null;
+            String apiKey = API_DEFAULT;
             if (line.hasOption(APIKEY_SHORT_CODE)) {
                 apiKey = line.getOptionValue(APIKEY_SHORT_CODE);
             }
-            String secretkey = null;
+            String secretkey = SECRET_KEY_DEFAULT;
             if (line.hasOption(SECRET_KEY_SHORT_CODE)) {
                 secretkey = line.getOptionValue(SECRET_KEY_SHORT_CODE);
             }
@@ -165,8 +166,8 @@ public class KarotzCLI {
                 installId = line.getOptionValue(INSTALL_ID_SHORT_CODE);
             }
 
-            if (apiKey == null || secretkey == null || installId == null) {
-                System.err.println("API Key, Secret Key and Install Id are required.");
+            if (installId == null) {
+                System.err.println("Install Id is required.");
                 printHelpAndExit();
             }
 
