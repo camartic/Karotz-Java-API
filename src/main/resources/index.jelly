@@ -1,6 +1,0 @@
-<!--
-  This view is used to render the installed plugins page.
--->
-<div>
-  This plugin aims to publish build results to your <a href="http://www.karotz.com/">Karotz</a>.
-</div>

@@ -21,7 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.peripheralware.karotz.action;
+package org.peripheralware.karotz.action.tts;
+
+import org.peripheralware.karotz.action.KarotzAction;
 
 import java.util.HashMap;
 import java.util.Map;
