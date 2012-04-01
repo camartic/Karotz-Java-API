@@ -1,0 +1,116 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.peripheralware</groupId>
+	<artifactId>karotz-cli</artifactId>
+	<packaging>jar</packaging>
+	<name>Java Karotz CLI</name>
+	<description>Java Karotz CLI</description>
+
+	<parent>
+		<groupId>org.peripheralware</groupId>
+		<artifactId>karotz</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+
+	<developers>
+		<developer>
+			<id>ritchiem</id>
+			<name>Martin Ritchie</name>
+			<email>ritchiem@apache.org</email>
+		</developer>
+	</developers>
+
+	<!--<scm>-->
+	<!--<connection>scm:git:git://github.com/jenkinsci/karotz-plugin.git</connection>-->
+	<!--<developerConnection>scm:git:git@github.com:jenkinsci/karotz-plugin.git</developerConnection>-->
+	<!--<url>https://github.com/jenkinsci/karotz-plugin</url>-->
+	<!--</scm>-->
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>org.peripheralware.karotz.cli.KarotzCLI</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<appendAssemblyId>false</appendAssemblyId>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.peripheralware</groupId>
+			<artifactId>karotz-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jline</groupId>
+			<artifactId>jline</artifactId>
+			<version>0.9.94</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>jline</id>
+			<name>JLine Project Repository</name>
+			<url>http://jline.sourceforge.net/m2repo</url>
+		</repository>
+	</repositories>
+
+
+</project>
