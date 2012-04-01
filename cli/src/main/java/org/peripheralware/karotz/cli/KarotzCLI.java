@@ -27,9 +27,20 @@ public class KarotzCLI {
     private final KarotzClient client;
     private final KarotzActionPublisher karotzActionPublisher;
 
-    public KarotzCLI(KarotzClient client) {
+
+    public KarotzCLI(final KarotzClient client) {
         this.client = client;
         karotzActionPublisher = new KarotzActionPublisher(client);
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                try {
+                    client.stopInteractiveMode();
+                } catch (KarotzException e) {
+                    log("Error stopping client:" + e.getMessage());
+                }
+            }
+        });
     }
 
     private void run() {
@@ -50,7 +61,7 @@ public class KarotzCLI {
         try {
             String input = "";
             ConsoleReader consoleReader = new ConsoleReader();
-            consoleReader.setDefaultPrompt("karotz >");
+            consoleReader.setDefaultPrompt("karotz > ");
             do {
                 input = consoleReader.readLine();
 
@@ -65,7 +76,7 @@ public class KarotzCLI {
     }
 
     private void processInput(ConsoleReader consoleReader, String input) throws IOException {
-
+        input = input.trim();
         String[] split = input.split(" ");
 
         String command = split[0];
@@ -73,14 +84,14 @@ public class KarotzCLI {
         if (command.equals("play")) {
             try {
                 karotzActionPublisher.performAction(new PlayMultimediaAction(input.substring(command.length())));
-                consoleReader.printString("Complete");
+                completeCommand(consoleReader);
             } catch (KarotzException e) {
                 consoleReader.printString(e.getMessage());
             }
         } else if (command.equals("speak")) {
             try {
                 karotzActionPublisher.performAction(new SpeakAction(input.substring(command.length())));
-                consoleReader.printString("Complete");
+                completeCommand(consoleReader);
             } catch (KarotzException e) {
                 consoleReader.printString(e.getMessage());
             }
@@ -91,14 +102,14 @@ public class KarotzCLI {
                 } else {
                     karotzActionPublisher.performAction(new LedLightAction(input.substring(command.length())));
                 }
-                consoleReader.printString("Complete");
+                completeCommand(consoleReader);
             } catch (KarotzException e) {
                 consoleReader.printString(e.getMessage());
             }
         } else if (command.equals("stop")) {
             try {
                 client.stopInteractiveMode();
-                consoleReader.printString("Complete");
+                completeCommand(consoleReader);
                 exit("Exiting");
             } catch (KarotzException e) {
                 consoleReader.printString(e.getMessage());
@@ -107,7 +118,11 @@ public class KarotzCLI {
             consoleReader.printString("Unknown command:" + input);
         }
 
+    }
 
+    private void completeCommand(ConsoleReader consoleReader) throws IOException {
+        consoleReader.printString("Complete");
+        consoleReader.printNewline();
     }
 
     private void log(String message) {
@@ -118,7 +133,6 @@ public class KarotzCLI {
     private static Options getOptions() {
         Options options = new Options();
 
-//        apiKey, String secretKey, String installId
         options.addOption(APIKEY_SHORT_CODE, "apiKey", true, "Karotz API Key");
         options.addOption("h", "help", true, "Show this help");
         options.addOption(INSTALL_ID_SHORT_CODE, "installId", true, "Karotz Install Id");
