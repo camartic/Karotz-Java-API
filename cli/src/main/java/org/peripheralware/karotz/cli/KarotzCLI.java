@@ -137,7 +137,7 @@ public class KarotzCLI {
         Options options = new Options();
 
         options.addOption(APIKEY_SHORT_CODE, "apiKey", true, "Karotz API Key");
-        options.addOption("h", "help", true, "Show this help");
+        options.addOption("h", "help", false, "Show this help");
         options.addOption(INSTALL_ID_SHORT_CODE, "installId", true, "Karotz Install Id");
         options.addOption(SECRET_KEY_SHORT_CODE, "secretKey", true, "Karotz Secret Key");
 
@@ -184,7 +184,7 @@ public class KarotzCLI {
 
     private static void printHelpAndExit() {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("java KarotzCLI", getOptions());
+        formatter.printHelp("java -jar karotz-cli-0.1.jar", getOptions());
         System.exit(0);
     }
 
